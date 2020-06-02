@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
-import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
     const [ persons, setPersons] = useState([])
@@ -10,36 +10,48 @@ const App = () => {
     const [ newNum, setNewNum ] = useState('')
     const [ filterName, setFilterName ] = useState('')
 
-    const hook = () => {
-        console.log('effect')
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                console.log('promise fulfilled')
-                setPersons(response.data)
+    useEffect(() => {
+        personService
+            .getAll()
+            .then(initialPerons => {
+                setPersons(initialPerons)
             })
-    }
-
-    useEffect(hook, [])
+    }, [])
 
     const addPerson = (event) => {
-        let hasName = false
         event.preventDefault()
         const personObject = {
             name: newName,
             number: newNum,
-            id: persons.length + 1,
         }
-        persons.forEach(person => {
-            if (person.name === newName) {
-                hasName = true
+        const duplicatePerson = persons.filter(
+            person => person.name === newName
+        )
+        if (duplicatePerson.length) {
+            const personToUpdate = duplicatePerson[0]
+            const replace = window.confirm(
+                `${personToUpdate.name} is already added to the phonebook. Replace the old number with the new one?`
+            )
+            if (replace) {
+                personToUpdate.number = newNum
+                personService
+                    .update(personToUpdate)
+                    .then(response => {
+                        setPersons(
+                            persons.map(person => {
+                                return person.id === response.id ? response : person
+                            })
+                        )
+                    })
             }
-        })
-        if (hasName) {
-            window.alert(newName + ' is already added to phonebook')
         } else {
-            setPersons(persons.concat(personObject))
-            setNewName('')
+            personService
+                .create(personObject)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
+                    setNewName('')
+                    setNewNum('')
+                })
         }
     }
 
@@ -69,7 +81,7 @@ const App = () => {
             <PersonForm addPerson={addPerson} newName={newName} 
             handleNameChange={handleNameChange} newNum={newNum} handleNumChange={handleNumChange}/>
             <h3>Numbers</h3>
-            <Persons personsToShow={personsToShow} />
+            <Persons personsToShow={personsToShow} setPersons={setPersons}/>
         </div>
     )
 }
