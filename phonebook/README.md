@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Overview
+
+A simple phonebook react web app. To start the phonebook
+use `npm run server` to start the data base server and
+then `npm start` to compile and run the web app.
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -11,6 +17,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+### `npm run server`
+
+Launches the json server handling the logging of phonebook.
 
 ### `npm test`
 
