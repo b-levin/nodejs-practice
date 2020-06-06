@@ -1,4 +1,1 @@
-/examples/notes-back/node_modules
-/examples/notes-front/node_modules
-/exercises/part2/phonebook/node_modules
-/exercises/part3/phonebook/node_modules
+node_modules/
