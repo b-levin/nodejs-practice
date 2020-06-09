@@ -30,14 +30,15 @@ app.get('/info', (req, res) => {
 })
 
 //get the json of all phonebook entries
-app.get('/api/persons', (req, res) => {
+app.get('/api/persons', (req, res, next) => {
     Person.find({}).then(persons => {
-        res.json(persons)
+        res.json(persons.map(person => person.toJSON()))
     })
+    .catch(error => next(error))
 })
 
 //add an entry to the phonebook
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const body = req.body
     
     if (body.name === undefined || body.number === undefined) {
@@ -56,9 +57,12 @@ app.post('/api/persons', (req, res) => {
         number: body.number,
     })
 
-    person.save().then(savedPerson => {
-        res.json(savedPerson)
-    })
+    person
+        .save()
+        .then(savedPerson => {
+            res.json(savedPerson.toJSON())
+        })
+        .catch(error => next(error))
 })
 
 //get phonebook entry by id
@@ -78,6 +82,7 @@ app.get('/api/persons/:id', (req, res, next) => {
 app.delete('/api/persons/:id', (req, res, next) => {
     Person.findByIdAndRemove(req.params.id)
         .then(result => {
+            result
             res.status(204).end()
         })
         .catch(error => next(error))
@@ -100,7 +105,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 
     Person.findByIdAndUpdate(req.params.id, person, { new: true })
         .then(updatedPerson => {
-            res.json(updatedPerson)
+            res.json(updatedPerson.toJSON())
         })
         .catch(error => next(error))
 })
@@ -118,6 +123,8 @@ const errorHandler = (error, req, res, next) => {
 
     if (error.name === 'CastError') {
         return res.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return res.status(400).send({ error: error.message })
     }
 
     next(error)
