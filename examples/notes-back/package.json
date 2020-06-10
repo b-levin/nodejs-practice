@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "jest --verbose",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "build:ui": "rm -rf build && cd ../notes-front && npm run build && cp -r build ../notes-back",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
@@ -22,6 +22,7 @@
     "mongoose": "^5.9.18"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "eslint": "^7.2.0",
     "jest": "^26.0.1",
     "nodemon": "^2.0.4",
