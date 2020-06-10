@@ -17,9 +17,9 @@ const initialBlogs = [
 
 const nonExistingId = async () => {
     const blog = new Blog({
-        title: 'temp',
-        author: 'temp',
-        url: 'temp',
+        title: 'Temp blog',
+        author: 'temp McTmp',
+        url: 'temp.gg',
         likes: 1
     })
     await blog.save()
