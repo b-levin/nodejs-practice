@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const config = require('../utils/config')
 
 mongoose.set('useFindAndModify', false)
 
-const url = process.env.MONGODB_URI
+const url = config.MONGODB_URI
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(result => {
@@ -16,11 +17,11 @@ const noteSchema = new mongoose.Schema({
     content: {
         type: String,
         minlength: 5,
-        required: true
+        required: true,
     },
     date: {
         type: Date,
-        required: false
+        required: false,
     },
     important: Boolean,
 })
