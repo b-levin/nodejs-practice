@@ -1,9 +1,10 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJpcmQiLCJpZCI6IjVlZTI5MjIxZDg0OGY2MDJlMzMyMjUyOCIsImlhdCI6MTU5MTkwODgzN30.DBx2I1vJFhbplHJK4X5zztVVh7M2RB89qPl7UMVrRVU
 
 {
-    "title": "Why php sucks",
-    "author": "Everyone",
+    "title": "What are pointers",
+    "author": "A Python user",
     "url": "something.ok",
-    "likes": 445555
+    "likes": 1
 }
