@@ -55,11 +55,11 @@
             }
 
             noteService
-            .create(noteObject)
-            .then(returnedNote => {
-                setNotes(notes.concat(returnedNote))
-                setNewNote('')
-            })
+                .create(noteObject)
+                .then(returnedNote => {
+                    setNotes(notes.concat(returnedNote))
+                    setNewNote('')
+                })
         }
 
         const toggleImportanceOf = (id) => {
