@@ -3,16 +3,6 @@ const config = require('../utils/config')
 
 mongoose.set('useFindAndModify', false)
 
-const url = config.MONGODB_URI
-
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(result => {
-        console.log('connected to MongoDB')
-    })
-    .catch((error) => {
-        console.log('error connecting to MongoDB:', error.message)
-    })
-
 const noteSchema = new mongoose.Schema({
     content: {
         type: String,

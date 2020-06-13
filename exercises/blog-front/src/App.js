@@ -5,12 +5,12 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const App = () => {
           type="text"
           value={author}
           name="Author"
-          onChange={({ target }) => setTitle(target.value)}
+          onChange={({ target }) => setAuthor(target.value)}
         />
       </div>
       <div>
@@ -121,7 +121,7 @@ const App = () => {
           type="text"
           value={url}
           name="URL"
-          onChange={({ target }) => setTitle(target.value)}
+          onChange={({ target }) => setUrl(target.value)}
         />
       </div>
       <button type="submit">create</button>
@@ -148,6 +148,7 @@ const App = () => {
       </div>
 
       <div>
+        <h2>create new</h2>
         {blogForm()}
       </div>
 
